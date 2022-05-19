@@ -11,7 +11,7 @@ class RSAKeyGenerator:
     def write(priv_keypath, pub_keypath):
 
         private_key = rsa.generate_private_key(public_exponent=65537, key_size=1024,)
-
+    
         private_pem = private_key.private_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.PKCS8,

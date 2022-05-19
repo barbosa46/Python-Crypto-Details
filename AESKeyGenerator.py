@@ -1,31 +1,21 @@
 import base64
+import os
 from sys import argv
-from Crypto.Cipher import AES
-from secrets import token_bytes
-
-import keyring
 
 class AESKeyGenerator:
     def write(keypath):
-        ##get an AES private key
         print("Generating AES key ...")
-        key = token_bytes(128)
-        encoded = base64.b64encode(key);
+        key = os.urandom(16)
         print( "Finish generating AES key" )
-        f = open(keypath, "w+")
-        print(key)
-        print(encoded)
-        f.write(str(encoded))
+        f = open(keypath, "wb")
+        f.write(key)
         f.close
-
+        
     def read(keypath):
         print("Reading key from file " + keypath + " ...")
-        f = open(keypath, "r")
-        key_string = f.read()
-        print(key_string)
-        key = base64.b64decode(key_string)
+        f = open(keypath, "rb")
+        key = f.read()
         f.close
-        print(key)
         return key
  
 def main(argv):
@@ -46,5 +36,5 @@ def main(argv):
     print("Done.")
 
 
-if name == '__main__':
+if __name__ == '__main__':
     main(argv)
