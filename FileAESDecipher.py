@@ -1,5 +1,4 @@
 from sys import argv
-#import javax.crypto.Cipher;
 from AESCipherByteArrayMixer import AESCipherByteArrayMixer
 from FileMixer import FileMixer
 

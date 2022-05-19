@@ -5,10 +5,6 @@ from AESKeyGenerator import AESKeyGenerator
 from Crypto.Cipher import AES
 
 
-# import javax.crypto.Cipher;
-# import javax.crypto.spec.IvParameterSpec;
-# import java.security.Key;
-
 class AESCipherByteArrayMixer:
     def __init__(self, opmode):
         self.opmode = opmode  # ENCRYPT DECRYPT
