@@ -16,7 +16,6 @@ class FileAESDecipher:
         cipher = AESCipherByteArrayMixer("Cipher.DECRYPT_MODE")
         cipher.setParameters(keyFile, mode)
         FileMixer.mix1(inputFile, outputFile, cipher)
-        print("result")
 
 
 def main(argv):

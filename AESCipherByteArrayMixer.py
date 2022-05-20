@@ -4,6 +4,9 @@ import traceback
 from AESKeyGenerator import AESKeyGenerator
 from Crypto.Cipher import AES
 
+BS = 16
+pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
+unpad = lambda s: s[0:-ord(s[-1])]
 
 class AESCipherByteArrayMixer:
     def __init__(self, opmode):
@@ -17,27 +20,25 @@ class AESCipherByteArrayMixer:
 
     def mix(self, byteArray, byteArray2):
         global cipher
-        iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
+        iv = '0000000000000000'
         try:
             key = AESKeyGenerator.read(self.keyFile)
 
-            match self.mode:
-                case 'ECB':
-                    cipher = AES.new(key, AES.MODE_ECB)
-                case 'CBC':
-                    cipher = AES.new(key, AES.MODE_CBC, iv)
-                case 'OFB':
-                    cipher = AES.new(key, AES.MODE_OFB, iv)
+
+            if self.mode == 'ECB':
+                cipher = AES.new(key, AES.MODE_ECB)
+            elif self.mode == 'CBC':
+                cipher = AES.new(key, AES.MODE_CBC, iv)
+            elif self.mode == 'OFB':
+                cipher = AES.new(key, AES.MODE_OFB, iv)
 
             print("Ciphering ...")
 
-            match self.opmode:
-                case 'Cipher.ENCRYPT_MODE':
-                    return cipher.encrypt(byteArray)
-                case 'Cipher.DECRYPT_MODE':
-                    return cipher.decrypt(byteArray)
+            if self.opmode == 'Cipher.ENCRYPT_MODE':
+                return cipher.encrypt(pad(byteArray.decode("utf-8")).encode("utf-8"))
+            elif self.opmode == 'Cipher.DECRYPT_MODE':
+                return unpad(cipher.decrypt(byteArray).decode("utf-8"))
 
         except Exception:
             traceback.print_exc(file=sys.stdout)
         return None
-

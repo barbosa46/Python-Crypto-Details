@@ -9,7 +9,11 @@ class FileMixer:
 
         outputBytes = manipulationFunction.mix(file1, file2)
 
-        with open(outputFilePath, 'w') as f:
+        writemode = "wb"
+        if isinstance(outputBytes, str):
+            writemode="w"
+
+        with open(outputFilePath, writemode) as f:
             f.write(outputBytes)
 
     def mix1(filePath, outputFilePath, manipulationFunction):
@@ -18,5 +22,9 @@ class FileMixer:
 
         outputBytes = manipulationFunction.mix(file, None)
 
-        with open(outputFilePath, 'w') as f:
+        writemode = "wb"
+        if isinstance(outputBytes, str):
+            writemode = "w"
+
+        with open(outputFilePath, writemode) as f:
             f.write(outputBytes)
