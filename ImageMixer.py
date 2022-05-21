@@ -1,4 +1,6 @@
 from ast import Bytes
+from base64 import b64decode, b64encode
+
 import PIL.Image as Image
 import io
 import random
@@ -27,11 +29,11 @@ class ImageMixer(object):
     def mix(inputFile, outputFile, manipulationFunction):
         with open(inputFile, "rb") as image:
             f = image.read()
-            imageBytes = bytearray(f)
-               
+            imageBytes = b64encode(f)
+
         print(imageBytes)
         outputBytes = manipulationFunction.mix(imageBytes, None)
-        
+
         outputImage = Image.open(io.BytesIO(imageBytes))
         outputImage.save(outputFile)
         

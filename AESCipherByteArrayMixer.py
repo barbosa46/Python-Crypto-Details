@@ -35,7 +35,7 @@ class AESCipherByteArrayMixer:
             print("Ciphering ...")
 
             if self.opmode == 'Cipher.ENCRYPT_MODE':
-                return cipher.encrypt(pad(byteArray.decode("utf-8")).encode("utf-8"))
+                return cipher.encrypt(pad(byteArray).encode("utf-8"))
             elif self.opmode == 'Cipher.DECRYPT_MODE':
                 return unpad(cipher.decrypt(byteArray).decode("utf-8"))
 
