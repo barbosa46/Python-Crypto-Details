@@ -19,8 +19,11 @@ class FileMixer:
     def mix1(filePath, outputFilePath, manipulationFunction):
         with open(filePath, 'r') as f:
             file = f.read()
-
+        print(file)
+        print(type(file))
         outputBytes = manipulationFunction.mix(file, None)
+        print(type(outputBytes))
+        print(outputBytes)
 
         writemode = "wb"
         if isinstance(outputBytes, str):

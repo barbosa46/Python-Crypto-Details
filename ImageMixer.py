@@ -1,5 +1,6 @@
 from ast import Bytes
 from base64 import b64decode, b64encode
+import base64
 
 import PIL.Image as Image
 import io
@@ -31,10 +32,14 @@ class ImageMixer(object):
             f = image.read()
             imageBytes = b64encode(f)
 
-        print(imageBytes)
+        print(len(f))
+        imageBytes = (str)(imageBytes)
+        
         outputBytes = manipulationFunction.mix(imageBytes, None)
-
-        outputImage = Image.open(io.BytesIO(imageBytes))
+        
+        print(len(outputBytes))
+        
+        outputImage = Image.open(io.BytesIO(f))
         outputImage.save(outputFile)
         
         '''ImageMixer.getImageFromArray(outputBytes, image.getWidth(), image.getHeight());
