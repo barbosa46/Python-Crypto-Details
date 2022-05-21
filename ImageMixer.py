@@ -1,9 +1,7 @@
 from ast import Bytes
+import PIL.Image as Image
 import io
 import random
-import PIL.Image as Image
-from click import File
-
 
 class ImageMixer(object):
     def __init__(self, *args):
@@ -18,12 +16,25 @@ class ImageMixer(object):
         
         image = ImageMixer.getImageFromArray(imageArray, width, height)
         ImageMixer.writeImagetoFile(image, imageFilePath)
-    
+
     
     def getImageFromArray(imageArray, width, height):        
-        image = Image.open(io.BytesIO(imageArray))
-
+        return;
        
     def writeImagetoFile(image, imageFilePath):
-        outputFile = File(imageFilePath);     
-        image.write(image, "png", outputFile)    
+        return;
+    
+    def mix(inputFile, outputFile, manipulationFunction):
+        with open(inputFile, "rb") as image:
+            f = image.read()
+            imageBytes = bytearray(f)
+               
+        print(imageBytes)
+        outputBytes = manipulationFunction.mix(imageBytes, None)
+        
+        outputImage = Image.open(io.BytesIO(imageBytes))
+        outputImage.save(outputFile)
+        
+        '''ImageMixer.getImageFromArray(outputBytes, image.getWidth(), image.getHeight());
+        ImageMixer.writeImageToFile(outputImage, outputFile);'''
+        return;
