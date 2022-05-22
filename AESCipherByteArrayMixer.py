@@ -1,13 +1,10 @@
-from ast import Bytes
 import sys
 import traceback
 
 from AESKeyGenerator import AESKeyGenerator
 from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
 
-BS = 16
-pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
-unpad = lambda s: s[0:-ord(s[-1])]
 
 class AESCipherByteArrayMixer:
     def __init__(self, opmode):
@@ -21,7 +18,7 @@ class AESCipherByteArrayMixer:
 
     def mix(self, byteArray, byteArray2):
         global cipher
-        iv = '0000000000000000'
+        iv = b'0000000000000000'
         try:
             key = AESKeyGenerator.read(self.keyFile)
 
@@ -36,9 +33,9 @@ class AESCipherByteArrayMixer:
             print("Ciphering ...")
 
             if self.opmode == 'Cipher.ENCRYPT_MODE':
-                return cipher.encrypt(pad(byteArray).encode("utf-8"))
+                return cipher.encrypt(pad(byteArray,16))
             elif self.opmode == 'Cipher.DECRYPT_MODE':
-                return unpad(cipher.decrypt(byteArray).decode("utf-8"))
+                return unpad(cipher.decrypt(byteArray), 16)
 
         except Exception:
             traceback.print_exc(file=sys.stdout)
