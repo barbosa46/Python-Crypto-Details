@@ -5,20 +5,21 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 import base64
+from base64_encode_decode import base64_encode_decode
 
 class RSAKeyGenerator:
 
     def write(priv_keypath, pub_keypath):
 
         private_key = rsa.generate_private_key(public_exponent=65537, key_size=1024,)
-    
+
         private_pem = private_key.private_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.PKCS8,
             encryption_algorithm=serialization.NoEncryption()
         )
-
-        private_key_encoded = base64.b64encode(private_pem)
+        print(private_pem)
+        private_key_encoded = base64_encode_decode.encode(private_pem)
 
         with open(priv_keypath, 'wb') as f:
             f.write(private_key_encoded)
@@ -36,7 +37,7 @@ class RSAKeyGenerator:
     def read(priv_keyPath, pub_keyPath):
         f = open(priv_keyPath, "r")
         key_encoded = f.read()
-        private_key_decoded = base64.b64decode(key_encoded)
+        private_key_decoded = base64_encode_decode.decode(key_encoded)
         print("Private RSA Key:")
         print(private_key_decoded)
 
@@ -50,7 +51,7 @@ class RSAKeyGenerator:
 
 def main(argv):
     if (len(argv) != 4):
-        print("Usage: RSAKeyGenerator [r|w] <priv-key-file> <pub-key-file>")
+        print("Usage: RSAKeyGenerator.py [r|w] <priv-key-file>.pem <pub-key-file>.pem")
         return
 
     mode = argv[1]
