@@ -39,6 +39,20 @@ or via SSH
 $ git clone git@github.com:tecnico-sec/Python-Crypto.git
 ```
 
+- Libraries that need to be installed:
+
+```bash
+$ pip3 install pillow
+```
+
+```bash
+$ pip install cryptography
+```
+
+```bash
+$ pip install pycrypto
+```
+
 
 ## Image Files
 
@@ -290,12 +304,9 @@ user.crt: OK
 
 
 
+#### Reading the generated pair of keys with Python
 
---------------------------------------------------------------------------------------------------------------------------------------------------
-
-#### Reading the generated pair of keys with Java
-
-To read the generated keys in Java it is necessary to convert them to the right format.
+To read the generated keys in Python it is necessary to convert them to the right format.
 
 Convert server.key to .pem
 
@@ -303,13 +314,13 @@ Convert server.key to .pem
 $ openssl rsa -in server.key -text > private_key.pem
 ```
 
-Convert private Key to PKCS#8 format (so Java can read it)
+Convert private Key to PKCS#8 format (so Python can read it)
 
 ```bash
 $ openssl pkcs8 -topk8 -inform PEM -outform DER -in private_key.pem -out private_key.der -nocrypt
 ```
 
-Output public key portion in DER format (so Java can read it)
+Output public key portion in DER format (so Python can read it)
 
 ```bash
 $ openssl rsa -in private_key.pem -pubout -outform DER -out public_key.der
@@ -321,12 +332,12 @@ Read the key files using the following command:
 $ python3 RSAKeyGenerator.py r private_key.der public_key.der
 ```
 
-#### Generating a pair of keys with Java
+#### Generating a pair of keys with Python
 
 Generate a new pair of RSA Keys.
 
 ```bash
-$ java RSAKeyGenerator w intro/outputs/priv.key intro/outputs/pub.key
+$ python3 RSAKeyGenerator.py w intro/outputs/private_key.key intro/outputs/public_key.key
 ```
 
 Based on the ImageAESCipher class create ImageRSACipher and ImageRSADecipher classes.
@@ -334,13 +345,12 @@ Based on the ImageAESCipher class create ImageRSACipher and ImageRSADecipher cla
 Encrypt the image with the public key and then decrypt it with the private key.
 Try the same thing with the other images - especially with other sizes.
 
-Please consider that the RSA cipher, as implemented by Java, can only be applied to one block of data at a time, and its size depends on the size of the key. 
+Please consider that the RSA cipher, as implemented by Python, can only be applied to one block of data at a time, and its size depends on the size of the key. 
 For a 1024-bit key the block size is 117 bytes or 60 bytes, depending on the padding options. 
 This is acceptable because the RSA cipher is mostly used to cipher keys or hashes that are small. 
 For large data, hybrid cipher is most suited (combining RSA with AES, for example). 
 For this exercise you can cipher one block at a time.
 
---------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Additional exercise (file tampering)
 
@@ -403,7 +413,10 @@ If so, how?
 **Acknowledgments**
 ...
 
+Original version: Valmiky Arquissandas
+
+Revisions: Diogo Peres Castilho, David R. Matos, Miguel Pardal, Ricardo Chaves
+
+Second Revisions changing it to python language: Diogo Fernandes, Guilherme Santos, Pedro Ferreira, Lucas Figueiredo, João Pereira
 
 ----
-
-[SIRS Faculty](mailto:meic-sirs@disciplinas.tecnico.ulisboa.pt)

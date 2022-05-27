@@ -1,10 +1,6 @@
 from sys import argv
-from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import padding
-import base64
 from base64_encode_decode import base64_encode_decode
 
 class RSAKeyGenerator:
@@ -18,7 +14,7 @@ class RSAKeyGenerator:
             format=serialization.PrivateFormat.PKCS8,
             encryption_algorithm=serialization.NoEncryption()
         )
-        print(private_pem)
+        
         private_key_encoded = base64_encode_decode.encode(private_pem)
 
         with open(priv_keypath, 'wb') as f:
@@ -52,6 +48,7 @@ class RSAKeyGenerator:
 def main(argv):
     if (len(argv) != 4):
         print("Usage: RSAKeyGenerator.py [r|w] <priv-key-file>.pem <pub-key-file>.pem")
+        print("Do not ever share your private keys.")
         return
 
     mode = argv[1]
@@ -68,4 +65,3 @@ def main(argv):
 
 if __name__ == '__main__':
     main(argv)
-
