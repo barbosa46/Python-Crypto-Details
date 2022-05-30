@@ -3,27 +3,30 @@ from ast import Bytes
 import imageio
 import PIL.Image as Image
 import random
+import numpy as np
+from random import randint
 
 class ImageMixer(object):
     def __init__(self, *args):
         pass
 
     def createRandomImage(imageFilePath, width, height):
-        imageArray = Bytes(width * height);
-        # generate random pixels on array
-        # (we multiply by 2^8=256 because one byte equals 8 pixels)
-        for i in range(0, width * height):
-            imageArray = (Bytes)(random.random() * 256)
+        imageArray = np.zeros((height, width, 4), dtype=np.uint8)
 
         image = ImageMixer.getImageFromArray(imageArray, width, height)
-        ImageMixer.writeImagetoFile(image, imageFilePath)
+        image.save(imageFilePath)
 
 
     def getImageFromArray(imageArray, width, height):
-        return;
-
-    def writeImagetoFile(image, imageFilePath):
-        return;
+        for x in range(width):
+            for y in range(height):
+                randomnumber = randint(0,1)
+                if randomnumber == 1:
+                    imageArray[x, y] = [0, 0, 0, 255]
+                else:
+                    imageArray[x, y] = [0,0,0,0]
+        img = Image.fromarray(imageArray, 'RGBA')
+        return img;
 
     def mix(inputFile, outputFile, manipulationFunction):
         imagedesc = Image.open(inputFile)

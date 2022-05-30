@@ -42,7 +42,15 @@ $ git clone git@github.com:tecnico-sec/Python-Crypto.git
 - Libraries that need to be installed:
 
 ```bash
-$ pip3 install pillow
+$ pip install pillow
+```
+
+```bash
+$ pip install imageio
+```
+
+```bash
+$ pip install numpy
 ```
 
 ```bash
