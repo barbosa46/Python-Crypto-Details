@@ -13,10 +13,11 @@ Instituto Superior Técnico, Universidade de Lisboa
 
 This laboratory assignment uses Python version 2.7.18 or later running on Linux or Windows (wsl2). The Python platform strongly emphasizes security, including language safety, cryptography, public key infrastructure, secure communication, authentication and access control.
 
+MP - Start with Python 3 - "DEPRECATION: Python 2.7 will reach the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 won't be maintained after that date. A future version of pip will drop support for Python 2.7. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support"
+
 The Python language includes a large set of libraries that provide lots of tools that are commonly-used for the implementation of security algorithms, mechanisms and protocols. So, by using those types of libraries we can easily implement a majority of things we can think in the cryptography world.
 
 Throughout this assignment we can see those libraries in action in terms of random number generation, key generation that can be created for certificates validation and all types of encryption.
-
 
 ## Setup
 
@@ -33,6 +34,7 @@ $ sudo apt-get install python3
 ```bash
 $ git clone https://github.com/tecnico-sec/Python-Crypto.git
 ```
+
 or via SSH
 
 ```bash
@@ -40,6 +42,10 @@ $ git clone git@github.com:tecnico-sec/Python-Crypto.git
 ```
 
 - Libraries that need to be installed:
+
+MP - add a short description of each library. See example in pillow.
+
+The Python Imaging Library adds image processing capabilities to your Python interpreter.
 
 ```bash
 $ pip install pillow
@@ -53,14 +59,28 @@ $ pip install imageio
 $ pip install numpy
 ```
 
+cryptography is a package which provides cryptographic recipes and primitives to Python developers.
+cryptography includes both high level recipes and low level interfaces to common cryptographic algorithms such as symmetric ciphers, message digests, and key derivation functions.
+
 ```bash
 $ pip install cryptography
 ```
+
+Python Cryptography Toolkit - This is a collection of both secure hash functions (such as SHA256 and RIPEMD160), and various encryption algorithms (AES, DES, RSA, ElGamal, etc.).
 
 ```bash
 $ pip install pycrypto
 ```
 
+```
+Warning: GMP or MPIR library not found; Not building Crypto.PublicKey._fastmath.
+      building 'Crypto.Random.OSRNG.winrandom' extension
+      error: Microsoft Visual C++ 14.0 or greater is required. Get it with "Microsoft C++ Build Tools": https://visualstudio.microsoft.com/visual-cpp-build-tools/  
+      [end of output]
+```
+
+On Windows, you may need to install Microsoft Visual C++ 14.0 or greater is required. 
+Get it with "Microsoft C++ Build Tools": <https://visualstudio.microsoft.com/visual-cpp-build-tools/>
 
 ## Image Files
 
@@ -72,38 +92,41 @@ The cryptographic operations will be applied to image files, so that its results
 
 Each one is presented with three different dimensions: 480x480, 960x960, and 2400x2400. The resolution number is part of the file name. The ImageMixer class is available to facilitate the operations on images. Different code examples are available, such as the RandomImageGenerator, ImageXor, and ImageAESCipher classes.
 
+MP - add command to create intro\outputs folder
 
 ### One-Time Pads (Symmetric stream cipher)
 
-If they could be correctly used in practice, one-time pads would provide perfect security. 
-One of the constraints to make them work as expected is that the key stream must never be reused. 
+If they could be correctly used in practice, one-time pads would provide perfect security.
+One of the constraints to make them work as expected is that the key stream must never be reused.
 The following steps visually illustrate what happens if they are reused, even if just once:
 
 Generate a new 480x480 random image:
 
 ```bash
-$ python3 RandomImageGenerator.py intro/outputs/otp.png 480 480
+$ python RandomImageGenerator.py intro/outputs/otp.png 480 480
 ```
+
 Perform the bitwise eXclusive OR operation (XOR) with the generated key:
 
 ```bash
-$ python3 ImageXor.py intro/inputs/tecnico-0480.png intro/outputs/otp.png intro/outputs/encrypted-tecnico.png
-```
-XOR tux-0480.png with the same generated key:
-```bash
-$ python3 ImageXor.py intro/inputs/tux-0480.png intro/outputs/otp.png intro/outputs/encrypted-tux.png
+$ python ImageXor.py intro/inputs/tecnico-0480.png intro/outputs/otp.png intro/outputs/encrypted-tecnico.png
 ```
 
-Watch the images encrypted-tecnico.png and encrypted-tux.png. 
+XOR tux-0480.png with the same generated key:
+```bash
+$ python ImageXor.py intro/inputs/tux-0480.png intro/outputs/otp.png intro/outputs/encrypted-tux.png
+```
+
+Watch the images `encrypted-tecnico.png` and `encrypted-tux.png`.
 Switch between them and see the differences.
 
 To make the differences obvious, XOR them together:
 
 ```bash
-$ python3 ImageXor.py intro/outputs/encrypted-tecnico.png intro/outputs/encrypted-tux.png intro/outputs/tecnico-tux.png
+$ python ImageXor.py intro/outputs/encrypted-tecnico.png intro/outputs/encrypted-tux.png intro/outputs/tecnico-tux.png
 ```
 
-You can see that the reuse of a one-time pad (or any stream cipher key at all) considerably weakens (or completely breaks) the security of the information. 
+You can see that the reuse of a one-time pad (or any stream cipher key at all) considerably weakens (or completely breaks) the security of the information.
 The reason is the following:         
 
 ```
@@ -142,12 +165,13 @@ C[i] = E_k(M[i])
 Begin by generating a new AES Key:
 
 ```bash
-$ python3 AESKeyGenerator.py w intro/outputs/aes.key
+$ python AESKeyGenerator.py w intro/outputs/aes.key
 ```
+
 Then, encrypt the glider image with it:
 
 ```bash
-$ python3 ImageAESCipher.py intro/inputs/glider-0480.png intro/outputs/aes.key ECB intro/outputs/glider-aes-ecb.png
+$ python ImageAESCipher.py intro/inputs/glider-0480.png intro/outputs/aes.key ECB intro/outputs/glider-aes-ecb.png
 ```
 
 Watch the output image. 
@@ -241,6 +265,8 @@ The goal now is to use asymmetric ciphers, with separate private and public keys
 RSA is the most well known of these algorithms.
 
 #### Generating a pair of keys with OpenSSL
+
+MP - use the intro/outputs folder?
 
 Generate the key pair:
 
@@ -392,6 +418,8 @@ Since the inputs and outputs of cryptographic mechanisms are byte arrays, in man
 A possibility is to use base 64 encoding that, for every binary sequence of 6 bits, assigns a predefined ASCII character.
 Execute the following to create a base 64 representation of files previously generated.
 
+MP - error - python.exe: can't open file 'C:\\dev\\SIRS\\Python-Crypto\\Base64Encode.py': [Errno 2] No such file or directory
+
 ```bash
 $ python3 Base64Encode.py grades/outputs/grades.cbc.aes grades/outputs/grades.cbc.aes.b64
 ```
@@ -425,6 +453,6 @@ Original version: Valmiky Arquissandas
 
 Revisions: Diogo Peres Castilho, David R. Matos, Miguel Pardal, Ricardo Chaves
 
-Second Revisions changing it to python language: Diogo Fernandes, Guilherme Santos, Pedro Ferreira, Lucas Figueiredo, João Pereira
+Second Revisions changing it to Python language: Diogo Fernandes, Guilherme Santos, Pedro Ferreira, Lucas Figueiredo, João Pereira
 
 ----
