@@ -2,7 +2,6 @@ from ast import Bytes
 
 import imageio
 import PIL.Image as Image
-import random
 import numpy as np
 from random import randint
 

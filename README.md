@@ -11,9 +11,7 @@ Instituto Superior Técnico, Universidade de Lisboa
 
 ## Introduction
 
-This laboratory assignment uses Python version 2.7.18 or later running on Linux or Windows (wsl2). The Python platform strongly emphasizes security, including language safety, cryptography, public key infrastructure, secure communication, authentication and access control.
-
-MP - Start with Python 3 - "DEPRECATION: Python 2.7 will reach the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 won't be maintained after that date. A future version of pip will drop support for Python 2.7. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support"
+This laboratory assignment uses Python version 3 or later running on Linux or Windows (wsl2). The Python platform strongly emphasizes security, including language safety, cryptography, public key infrastructure, secure communication, authentication and access control.
 
 The Python language includes a large set of libraries that provide lots of tools that are commonly-used for the implementation of security algorithms, mechanisms and protocols. So, by using those types of libraries we can easily implement a majority of things we can think in the cryptography world.
 
@@ -41,46 +39,49 @@ or via SSH
 $ git clone git@github.com:tecnico-sec/Python-Crypto.git
 ```
 
-- Libraries that need to be installed:
-
-MP - add a short description of each library. See example in pillow.
-
-The Python Imaging Library adds image processing capabilities to your Python interpreter.
+In order to continue this assignement using native *Windows* python you need to install the following packages using "pip". To install "pip" in *Windows* follow these steps:
 
 ```bash
-$ pip install pillow
+$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python get-pip.py
 ```
+
+After that you will need to install a few libraries.
+
+- Libraries that need to be installed (Windows or Linux):
+
+The Python Imaging Library adds image processing capabilities to your Python interpreter.
+This library provides extensive file format support, an efficient internal representation, and fairly powerful image processing capabilities.
+The core image library is designed for fast access to data stored in a few basic pixel formats. It should provide a solid foundation for a general image processing tool.
+
+```bash
+$ pip install Pillow
+```
+
+Imageio is a Python library that provides an easy interface to read and write a wide range of image data, including animated images, volumetric data, and scientific formats. It is cross-platform, runs on Python 3.5+, and it is easy to install.
 
 ```bash
 $ pip install imageio
 ```
 
+Numpy provides a powerful N-dimensional array object, sophisticated (broadcasting) functions, useful linear algebra, Fourier transform, and random number capabilities, and much more.
+
 ```bash
 $ pip install numpy
 ```
 
-cryptography is a package which provides cryptographic recipes and primitives to Python developers.
-cryptography includes both high level recipes and low level interfaces to common cryptographic algorithms such as symmetric ciphers, message digests, and key derivation functions.
+Cryptography is a package which provides cryptographic recipes and primitives to Python developers.
+Cryptography includes both high level recipes and low level interfaces to common cryptographic algorithms such as symmetric ciphers, message digests, and key derivation functions.
 
 ```bash
 $ pip install cryptography
 ```
 
-Python Cryptography Toolkit - This is a collection of both secure hash functions (such as SHA256 and RIPEMD160), and various encryption algorithms (AES, DES, RSA, ElGamal, etc.).
+PyCryptodome is a self-contained Python package of low-level cryptographic primitives. Avoid having pycrypto and pycryptodome installed at the same time, as they will interfere with each other.
 
 ```bash
-$ pip install pycrypto
+$ pip install pycryptodome
 ```
-
-```
-Warning: GMP or MPIR library not found; Not building Crypto.PublicKey._fastmath.
-      building 'Crypto.Random.OSRNG.winrandom' extension
-      error: Microsoft Visual C++ 14.0 or greater is required. Get it with "Microsoft C++ Build Tools": https://visualstudio.microsoft.com/visual-cpp-build-tools/  
-      [end of output]
-```
-
-On Windows, you may need to install Microsoft Visual C++ 14.0 or greater is required. 
-Get it with "Microsoft C++ Build Tools": <https://visualstudio.microsoft.com/visual-cpp-build-tools/>
 
 ## Image Files
 
@@ -92,7 +93,11 @@ The cryptographic operations will be applied to image files, so that its results
 
 Each one is presented with three different dimensions: 480x480, 960x960, and 2400x2400. The resolution number is part of the file name. The ImageMixer class is available to facilitate the operations on images. Different code examples are available, such as the RandomImageGenerator, ImageXor, and ImageAESCipher classes.
 
-MP - add command to create intro\outputs folder
+Create a folder named intro/outputs:
+
+```bash
+$ mkdir /intro/outputs
+```
 
 ### One-Time Pads (Symmetric stream cipher)
 
@@ -103,18 +108,18 @@ The following steps visually illustrate what happens if they are reused, even if
 Generate a new 480x480 random image:
 
 ```bash
-$ python RandomImageGenerator.py intro/outputs/otp.png 480 480
+$ python3 RandomImageGenerator.py intro/outputs/otp.png 480 480
 ```
 
 Perform the bitwise eXclusive OR operation (XOR) with the generated key:
 
 ```bash
-$ python ImageXor.py intro/inputs/tecnico-0480.png intro/outputs/otp.png intro/outputs/encrypted-tecnico.png
+$ python3 ImageXor.py intro/inputs/tecnico-0480.png intro/outputs/otp.png intro/outputs/encrypted-tecnico.png
 ```
 
 XOR tux-0480.png with the same generated key:
 ```bash
-$ python ImageXor.py intro/inputs/tux-0480.png intro/outputs/otp.png intro/outputs/encrypted-tux.png
+$ python3 ImageXor.py intro/inputs/tux-0480.png intro/outputs/otp.png intro/outputs/encrypted-tux.png
 ```
 
 Watch the images `encrypted-tecnico.png` and `encrypted-tux.png`.
@@ -123,7 +128,7 @@ Switch between them and see the differences.
 To make the differences obvious, XOR them together:
 
 ```bash
-$ python ImageXor.py intro/outputs/encrypted-tecnico.png intro/outputs/encrypted-tux.png intro/outputs/tecnico-tux.png
+$ python3 ImageXor.py intro/outputs/encrypted-tecnico.png intro/outputs/encrypted-tux.png intro/outputs/tecnico-tux.png
 ```
 
 You can see that the reuse of a one-time pad (or any stream cipher key at all) considerably weakens (or completely breaks) the security of the information.
@@ -165,13 +170,13 @@ C[i] = E_k(M[i])
 Begin by generating a new AES Key:
 
 ```bash
-$ python AESKeyGenerator.py w intro/outputs/aes.key
+$ python3 AESKeyGenerator.py w intro/outputs/aes.key
 ```
 
 Then, encrypt the glider image with it:
 
 ```bash
-$ python ImageAESCipher.py intro/inputs/glider-0480.png intro/outputs/aes.key ECB intro/outputs/glider-aes-ecb.png
+$ python3 ImageAESCipher.py intro/inputs/glider-0480.png intro/outputs/aes.key ECB intro/outputs/glider-aes-ecb.png
 ```
 
 Watch the output image. 
