@@ -186,11 +186,13 @@ Try the same thing with the other images (especially with other sizes).
 
 Try to generate a new AES key.
 What is necessary to change in the code for that to happen?
+<!-- Since we use a random function you only need to delete the previous AES key and run the code again. -->
 
 Repeat all the previous steps for the new key.
 
 Compare the results obtained using ECB mode with AES with the previous ones. 
 What are the differences between them?
+<!-- Each new ECB block is different from the previous one since the key is different -->
 
 
 #### CBC (Cipher Block Chaining)
@@ -233,6 +235,7 @@ Now watch the images glider-aes-cbc.png, tux-aes-cbc.png, and tecnico-aes-cbc.pn
 Look to the first lines of pixels. 
 Can you see what is going on?
 
+<!-- The first lines of pixels are equal due to the initialization block being equal to both -->
 
 #### OFB
 
@@ -263,6 +266,7 @@ Why?
 
 What is more secure to use: CBC or OFB?
 
+<!-- OFB because it is ciphering the initial vector -->
 
 ### Asymmetric ciphers
 
@@ -271,18 +275,16 @@ RSA is the most well known of these algorithms.
 
 #### Generating a pair of keys with OpenSSL
 
-MP - use the intro/outputs folder?
-
 Generate the key pair:
 
 ```bash
-$ openssl genrsa -out server.key
+$ openssl genrsa -out intro/outputs/server.key
 ```
 
 Save the public key:
 
 ```bash
-$ openssl rsa -in server.key -pubout > public.key
+$ openssl rsa -in intro/outputs/server.key -pubout > intro/outputs/public.key
 ```
 
 
@@ -291,42 +293,42 @@ $ openssl rsa -in server.key -pubout > public.key
 Create a Certificate Signing Request, using same key:
 
 ```bash
-$ openssl req -new -key server.key -out server.csr
+$ openssl req -new -key intro/outputs/server.key -out intro/outputs/server.csr
 ```
 
 Self-sign:
 
 ```bash
-$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+$ openssl x509 -req -days 365 -in intro/outputs/server.csr -signkey intro/outputs/server.key -out intro/outputs/server.crt
 ```
 
 For our certificate to be able to sign other certificates, OpenSSL requires that a database exists (a .srl file). 
 Create it:
 
 ```bash
-$ echo 01 > server.srl
+$ echo 01 > intro/outputs/server.srl
 ```
 
 
 Then, generating a key for a user is basically repeating the same steps (see commands above), except that the self-sign no longer happens and is replaced by:
 
 ```bash
-$ openssl x509 -req -days 365 -in user.csr -CA server.crt -CAkey server.key -out user.crt
+$ openssl x509 -req -days 365 -in intro/outputs/user.csr -CA intro/outputs/server.crt -CAkey intro/outputs/server.key -out intro/outputs/user.crt
 ```
 
 Sign the file grades.txt with the user certificate:
 
 ```bash
-$ openssl dgst -sha256 grades/inputs/grades.txt > grades.sha256
+$ openssl dgst -sha256 grades/inputs/grades.txt > intro/outputs/grades.sha256
 
-$ openssl rsautl -sign -inkey user.key -keyform PEM -in grades.sha256 > grades.sig
+$ openssl rsautl -sign -inkey intro/outputs/user.key -keyform PEM -in intro/outputs/grades.sha256 > intro/outputs/grades.sig
 ```
 
 
 Verify the signature with the user key:
 
 ```bash
-$ openssl rsautl -verify -in grades.sig -inkey user.key
+$ openssl rsautl -verify -in intro/outputs/grades.sig -inkey intro/outputs/user.key
 
 SHA256(/tmp/sirs/grades/inputs/grades.txt)= 770ddfe97cd0e6d279b9ce780ff060554d8ccbe4b8eccaed364a8fc6e89fd34d
 ```
@@ -350,7 +352,7 @@ To read the generated keys in Python it is necessary to convert them to the righ
 Convert server.key to .pem
 
 ```bash
-$ openssl rsa -in server.key -text > private_key.pem
+$ openssl rsa -in intro/outputs/server.key -text > private_key.pem
 ```
 
 Convert private Key to PKCS#8 format (so Python can read it)
@@ -400,7 +402,7 @@ Begin by encrypting this file into ecb.aes.
 For this example, we will still reuse the AES key generated above and ECB mode.
 
 ```bash
-$ python3 FileAESCipher.py grades/inputs/grades.txt intro/outputs/aes.key ECB grades/outputs/grades.ecb.aes
+$ python3 FileAESCipher.py grades/inputs/grades.txt intro/outputs/aes.key ECB intro/outputs/grades.ecb.aes
 ```
 
 Keeping in mind how the mode operations work, and without using the secret key, try to change your grade to 21 in the encrypted files or give everyone in class a 20.
@@ -412,9 +414,9 @@ Did your changes have side effects?
 Now try to attack cbc.aes and ofb.aes. For this example, we will still reuse the AES key generated above but use the CBC and OFB modes.
 
 ```bash
-$ python3 FileAESCipher.py grades/inputs/grades.txt intro/outputs/aes.key CBC grades/outputs/grades.cbc.aes
+$ python3 FileAESCipher.py grades/inputs/grades.txt intro/outputs/aes.key CBC intro/outputs/grades.cbc.aes
 
-$ python3 FileAESCipher.py grades/inputs/grades.txt intro/outputs/aes.key OFB grades/outputs/grades.ofb.aes
+$ python3 FileAESCipher.py grades/inputs/grades.txt intro/outputs/aes.key OFB intro/outputs/grades.ofb.aes
 ```
 
 How do you compare the results with ECB?
