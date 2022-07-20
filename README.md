@@ -7,15 +7,15 @@ Instituto Superior Técnico, Universidade de Lisboa
 ## Goals
 
 - Use the cryptographic mechanisms available in the Python platform.
-- ...
+- See the difference between Python and Java in terms of cryptography.
 
 ## Introduction
 
-This laboratory assignment uses Python version 3 or later running on Linux or Windows (wsl2). The Python platform strongly emphasizes security, including language safety, cryptography, public key infrastructure, secure communication, authentication and access control.
+This laboratory assignment uses Python version 3 or later running on Linux or Windows (wsl2) and it is a rebuild of a Java cryptography assignment but using the Python language and its mechanisms.
 
-The Python language includes a large set of libraries that provide lots of tools that are commonly-used for the implementation of security algorithms, mechanisms and protocols. So, by using those types of libraries we can easily implement a majority of things we can think in the cryptography world.
+The Python language includes a large set of libraries that provide tools that can be used for the implementation of security, mechanisms and protocols. So, by using these types of libraries we can easily implement many things we can think in the cryptography world.
 
-Throughout this assignment we can see those libraries in action in terms of random number generation, key generation that can be created for certificates validation and all types of encryption.
+Throughout this assignment we can see these libraries in action for random number generation and key generation. The second one generates keys that can be used to create certificates and to make digital signatures or to simply encrypt files using asymmetric keys or symmetric keys depending on the situation.
 
 ## Setup
 
@@ -27,7 +27,7 @@ Before starting this assignment you will need a few steps to be able to investig
 $ sudo apt-get install python3
 ```
 
-- Then you will need to clone this reository into your workspace
+- Then you will need to clone this repository into your workspace
 
 ```bash
 $ git clone https://github.com/tecnico-sec/Python-Crypto.git
@@ -39,7 +39,7 @@ or via SSH
 $ git clone git@github.com:tecnico-sec/Python-Crypto.git
 ```
 
-In order to continue this assignement using native *Windows* python you need to install the following packages using "pip". To install "pip" in *Windows* follow these steps:
+In order to continue this assignment using native *Windows* python you need to install the following packages using "pip". To install "pip" in *Windows* follow these steps:
 
 ```bash
 $ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
