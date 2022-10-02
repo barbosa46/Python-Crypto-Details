@@ -452,14 +452,4 @@ In percentage, how much is it?
 Does base 64 provide any kind of security? 
 If so, how?
 
-
-**Acknowledgments**
-...
-
-Original version: Valmiky Arquissandas
-
-Revisions: Diogo Peres Castilho, David R. Matos, Miguel Pardal, Ricardo Chaves
-
-Second Revisions changing it to Python language: Diogo Fernandes, Guilherme Santos, Pedro Ferreira, Lucas Figueiredo, João Pereira
-
 ----
