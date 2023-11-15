@@ -2,7 +2,7 @@ Instituto Superior Técnico, Universidade de Lisboa
 
 **Network and Computer Security**
 
-# Lab guide: Python Cryptographic Mechanisms
+# Lab guide: Python Cryptographic Subtleties
 
 ## Goals
 
