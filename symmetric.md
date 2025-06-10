@@ -1,6 +1,6 @@
 # Guião de Laboratório: Cifras Simétricas em Python
 **Instituto Superior Técnico, Universidade de Lisboa**  
-**Segurança de Redes e Computadores**
+**Fundamentos da Segurança**
 
 ## Introdução
 
