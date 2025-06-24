@@ -55,7 +55,7 @@ pip install pycryptodome
 
 ### Passo 4: Navegar para a Pasta do Projecto
 ```bash
-cd /c/Users/SeuNome/Desktop/Python-Crypto
+cd Desktop/Python-Crypto
 ```
 
 ## Parte 1: Fundamentos do RSA
