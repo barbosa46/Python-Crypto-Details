@@ -277,12 +277,11 @@ Tente, agora, decifrar os restantes ficheiros criados no passo anterior. Note qu
 ### O Desafio
 O aluno "Thomas S. Cook" quer alterar a sua nota de forma não detectada. Como é que isto pode ser feito conhecendo apenas:
 - A estrutura do ficheiro
-- Os modos de operação
-- Os ficheiros cifrados (mas não a chave!)
+- O ficheiro cifrado, usando o modo ECB (mas não a chave!)
 
-**Dica para ECB:** Blocos iguais têm cifras iguais. Se dois alunos têm a mesma nota, os blocos das notas são iguais.
+Para realizar este desafio, um editor hexadecimal será útil para visualizar cada byte do ficheiro. Por exemplo, o [hxd](https://mh-nexus.de/en/downloads.php?product=HxD20), ou a extensão "Hex Editor" do Visual Studio Code.
 
-**Dica para CBC/OFB:** Alterações num bloco cifrado afectam a decifra de forma previsível.
+**Dica:** No modo ECB blocos iguais têm cifras iguais. Se dois alunos têm a mesma nota, os blocos das notas são iguais.
 
 ## Parte 4: Codificação Base64
 
