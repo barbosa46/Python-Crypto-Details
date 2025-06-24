@@ -264,6 +264,16 @@ python FileAESCipher.py grades\inputs\grades.txt intro\outputs\aes.key CBC intro
 python FileAESCipher.py grades\inputs\grades.txt intro\outputs\aes.key OFB intro\outputs\grades.ofb.aes
 ```
 
+### Experiência 10: Decifrando a Base de Dados Cifrada
+Para voltar a ter acesso ao contéudo da base de dados, vamos decifrar o ficheiro criado no passo anterior.
+
+**ECB Mode:**
+```cmd
+python FileAESDecipher.py intro\outputs\grades.ecb.aes intro\outputs\aes.key ECB intro\outputs\grades_plain_ecb.txt
+```
+
+Tente, agora, decifrar os restantes ficheiros criados no passo anterior. Note que deverá decifrar com o mesmo modo que foi usado para cifrar.
+
 ### O Desafio
 O aluno "Thomas S. Cook" quer alterar a sua nota de forma não detectada. Como é que isto pode ser feito conhecendo apenas:
 - A estrutura do ficheiro
