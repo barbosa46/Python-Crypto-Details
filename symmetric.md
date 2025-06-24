@@ -27,7 +27,7 @@ Imaginem que têm um cofre com uma chave. Para fechar o cofre (cifrar) e para o 
    - Deve aparecer algo como "Python 3.x.x"
 
 ### Passo 2: Descarregar os Ficheiros do Laboratório
-1. Abram um browser e vão a: https://github.com/tecnico-sec/Python-Crypto
+1. Abram um browser e vão a: https://github.com/barbosa46/Python-Crypto-Details
 2. Cliquem no botão verde "Code" e depois "Download ZIP"
 3. Cliquem com o botão direito em cima do ficheiro descarregado e escolham a opção "Extrair"
 4. Extraiam o ficheiro ZIP para uma pasta (por exemplo: `C:\Users\<Username no seu PC>\Desktop\Python-Crypto`, relembrem-se que esta diretoria é uma pasta chamada "Python-Crypto" no vosso habitual "Ambiente de Trabalho")
