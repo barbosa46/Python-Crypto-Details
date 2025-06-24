@@ -31,7 +31,7 @@ class RSAKeyGenerator:
             f.write(public_pem)
 
     def read(priv_keyPath, pub_keyPath):
-        f = open(priv_keyPath, "r")
+        f = open(priv_keyPath, "rb")
         key_encoded = f.read()
         private_key_decoded = base64_encode_decode.decode(key_encoded)
         print("Private RSA Key:")
@@ -40,7 +40,7 @@ class RSAKeyGenerator:
         print("\n")
 
         print("Public RSA Key:")
-        f = open(pub_keyPath, "r")
+        f = open(pub_keyPath, "rb")
         pub_key = f.read()
         print(pub_key)
 
