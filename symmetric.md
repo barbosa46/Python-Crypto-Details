@@ -79,7 +79,7 @@ python RandomImageGenerator.py intro\outputs\otp.png 480 480
 - `intro\outputs\otp.png`: Onde a nossa chave será guardada (OTP = One-Time Pad)
 - `480 480`: Dimensões da imagem (480x480 pixels)
 
-**Resultado esperado:** Uma imagem com "ruído" colorido - cada pixel tem uma cor completamente aleatória.
+**Resultado esperado:** Uma imagem com "ruído".
 
 ### Experiência 2: Cifrando a Primeira Imagem
 
