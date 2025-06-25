@@ -18,6 +18,9 @@ Imaginem que têm um cofre com uma chave. Para fechar o cofre (cifrar) e para o 
 ## Preparação do Ambiente (Windows)
 
 ### Passo 1: Instalar o Python
+
+#### Para Windows
+
 1. Vão ao site oficial do Python: https://www.python.org/downloads/
 2. Descarreguem a versão mais recente do Python 3
 3. Durante a instalação, **muito importante**: marquem a opção "Add Python to PATH"
@@ -26,6 +29,18 @@ Imaginem que têm um cofre com uma chave. Para fechar o cofre (cifrar) e para o 
    - Escrevem: `python --version`
    - Deve aparecer algo como "Python 3.x.x"
 
+#### Para macOS
+1. Abrir o **Terminal**
+2. Instalar o Homebrew (se ainda não tiverem):
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+3. Instalar o Python:
+   ```bash
+   brew install python
+3. Verificar a instalação:
+   ```bash
+   python3 --version
+   
 ### Passo 2: Descarregar os Ficheiros do Laboratório
 1. Abram um browser e vão a: https://github.com/barbosa46/Python-Crypto-Details
 2. Cliquem no botão verde "Code" e depois "Download ZIP"
@@ -42,6 +57,7 @@ pip install numpy
 pip install cryptography
 pip install pycryptodome
 ```
+> **Nota:** Em versões Python 3.x, usem `pip3` se `pip` não funcionar.
 
 **O que fazem estas bibliotecas?**
 - **Pillow**: Permite trabalhar com imagens (abrir, modificar, guardar)
@@ -58,9 +74,11 @@ cd C:\Users\SeuNome\Desktop\Python-Crypto
 
 ### Passo 5: Criar a Pasta de Outputs
 ```cmd
-mkdir intro\outputs
+mkdir intro\outputs   # Windows
 ```
-
+```cmd
+mkdir -p intro/outputs   # macOS
+```
 ## Parte 1: One-Time Pads (Cifras de Fluxo)
 
 ### O que é um One-Time Pad?
@@ -71,8 +89,14 @@ Um **One-Time Pad** é teoricamente a cifra mais segura que existe - **se** for 
 **O que vamos fazer:** Criar uma imagem completamente aleatória que servirá como nossa chave secreta.
 
 ```cmd
-python RandomImageGenerator.py intro\outputs\otp.png 480 480
+python RandomImageGenerator.py intro\outputs\otp.png 480 480   # Windows
 ```
+```cmd
+python RandomImageGenerator.py intro/outputs/otp.png 480 480   # macOs
+```
+> **Nota:** Em versões Python 3.x, usem `python3` se `python` não funcionar.
+> 
+> **Nota:** Em macOS, usem `/` em vez de `\` para caminhos.
 
 **O que acontece aqui:**
 - `RandomImageGenerator.py`: O programa que gera pixels aleatórios
@@ -293,17 +317,20 @@ Base64 é uma forma de representar dados binários usando apenas caracteres ASCI
 
 **Codificar:**
 ```cmd
-python Base64Encode.py intro\outputs\grades.cbc.aes intro\outputs\grades.cbc.aes.b64
+python base64_encode_decode.py encode intro\outputs\grades.cbc.aes intro\outputs\grades.cbc.aes.b64
 ```
 
 **Descodificar:**
 ```cmd
-python Base64Decode.py intro\outputs\grades.cbc.aes.b64 intro\outputs\grades.cbc.aes.b64.decoded
+python base64_encode_decode.py decode intro\outputs\grades.cbc.aes.b64 intro\outputs\grades.cbc.aes.b64.decoded
 ```
 
 **Verificar se são iguais:**
 ```cmd
-fc /b intro\outputs\grades.cbc.aes intro\outputs\grades.cbc.aes.b64.decoded
+fc /b intro\outputs\grades.cbc.aes intro\outputs\grades.cbc.aes.b64.decoded   #Windows
+```
+```cmd
+cmp -b intro/outputs/grades.cbc.aes intro/outputs/grades.cbc.aes.b64.decoded   # macOS
 ```
 
 **Se não aparecer nada:** Os ficheiros são idênticos!
