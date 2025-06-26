@@ -12,7 +12,6 @@ class ImageXor:
                     imageArray[i, e] = [0, 0, 0, 0]
                 else:
                     imageArray[i, e] = [0, 0 , 0 , 255]
-        print(imageArray)
         return imageArray
         
     def run(argv):
