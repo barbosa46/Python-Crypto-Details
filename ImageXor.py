@@ -1,47 +1,32 @@
 from sys import argv
 from PIL import Image
-import imageio.v2 as imageio
 import numpy as np
+
 class ImageXor:
-    def R_to_RGBA(image, imagedesc):
-        imageArray = np.zeros((imagedesc.width, imagedesc.height, 4), dtype=np.uint8)
-
-        for i in range(imagedesc.width):
-            for e in range(imagedesc.height):
-                if (image[i][e].all()==0):
-                    imageArray[i, e] = [0, 0, 0, 0]
-                else:
-                    imageArray[i, e] = [0, 0 , 0 , 255]
-        return imageArray
-        
+    @staticmethod
     def run(argv):
-        imagedesc = Image.open(argv[1])        
-        image = imageio.imread(argv[1])
-        image2desc = Image.open(argv[2])
-        image2 = imageio.imread(argv[2])     
-        
-        if image[0][0].size == 3:
-            image = ImageXor.R_to_RGBA(image, imagedesc)
-        if image2[0][0].size == 3:    
-            image2 = ImageXor.R_to_RGBA(image2, image2desc)
+        # Abrir ambas as imagens como RGB (3 canais)
+        image1 = np.array(Image.open(argv[1]).convert("RGB"), dtype=np.uint8)
+        image2 = np.array(Image.open(argv[2]).convert("RGB"), dtype=np.uint8)
 
-        outputImageArray = np.zeros((imagedesc.width, imagedesc.height, 4), dtype=np.uint8)
-        for i in range(imagedesc.width):
-            for e in range(imagedesc.height):
-                if (image[i][e] == image2[i][e]).all():
-                    outputImageArray[i][e] = [0, 0, 0, 0]
-                else:
-                    outputImageArray[i][e] = [0, 0 , 0 , 255]
-        
-        img = Image.fromarray(outputImageArray, 'RGBA')
-        image = imageio.imwrite(argv[3], img)
+        # Verificar se têm a mesma dimensão
+        if image1.shape != image2.shape:
+            raise ValueError("Erro: As imagens têm dimensões diferentes.")
+
+        # Fazer XOR bit a bit
+        xored = np.bitwise_xor(image1, image2)
+
+        # Guardar o resultado como imagem RGB
+        result = Image.fromarray(xored, 'RGB')
+        result.save(argv[3])
+        print(f"Imagem XOR guardada em: {argv[3]}")
 
 def main(argv):
-    if (len(argv) != 4):
-        print("This program XORs two b/w image files.");
-        print("Usage: imageXOR <inputFile1.png> <inputFile2.png> <outputFile.png>");
-        return;
-    ImageXor.run(argv);
+    if len(argv) != 4:
+        print("Este programa faz XOR entre duas imagens RGB.")
+        print("Uso: python3 ImageXor.py <input1.png> <input2.png> <output.png>")
+        return
+    ImageXor.run(argv)
 
 if __name__ == '__main__':
     main(argv)
