@@ -8,7 +8,7 @@ class ImageXor:
 
         for i in range(imagedesc.width):
             for e in range(imagedesc.height):
-                if (image[i][e]==0):
+                if (image[i][e].all()==0):
                     imageArray[i, e] = [0, 0, 0, 0]
                 else:
                     imageArray[i, e] = [0, 0 , 0 , 255]
@@ -20,9 +20,9 @@ class ImageXor:
         image2desc = Image.open(argv[2])
         image2 = imageio.imread(argv[2])     
         
-        if image[0][0].size == 1:
+        if image[0][0].size == 3:
             image = ImageXor.R_to_RGBA(image, imagedesc)
-        if image2[0][0].size == 1:    
+        if image2[0][0].size == 3:    
             image2 = ImageXor.R_to_RGBA(image2, image2desc)
 
         outputImageArray = np.zeros((imagedesc.width, imagedesc.height, 4), dtype=np.uint8)
