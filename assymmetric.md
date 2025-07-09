@@ -33,6 +33,7 @@ Esta é a magia da criptografia assimétrica - permite comunicação segura sem 
 1. Descarreguem e instalem o Git para Windows: https://git-scm.com/download/win
 2. Durante a instalação, certifiquem-se que marcam "Git Bash"
 3. O Git Bash inclui ferramentas Unix, incluindo o OpenSSL
+4. Vídeo demonstrativo de instalação do git bash: [link](https://drive.google.com/file/d/1nyzt2rNEkUCgefqzaQba92xEdSt5Tqjp/view?usp=sharing)
 
 **Opção B: Descarregar OpenSSL directamente**
 1. Vão a: https://slproweb.com/products/Win32OpenSSL.html
