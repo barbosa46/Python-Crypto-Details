@@ -1,6 +1,14 @@
 import base64
 import sys
 
+class base64_encode_decode:
+    def encode(data):
+        return base64.b64encode(data)
+
+    def decode(data):
+        return base64.b64decode(data)
+
+
 def encode_file(input_path, output_path):
     with open(input_path, "rb") as f_in:
         data = f_in.read()
