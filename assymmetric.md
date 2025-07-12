@@ -344,7 +344,7 @@ python RSAKeyGenerator.py w intro/outputs/python_private.key intro/outputs/pytho
 python RSAKeyGenerator.py r intro/outputs/python_private.key intro/outputs/python_public.key
 ```
 
-## Parte 7: Cifrar Imagens com RSA
+## Parte 7: Cifrar Imagens com RSA (Projeto Opcional em Python)
 
 ### Limitações do RSA
 ⚠️ **Muito Importante:** O RSA tem limitações severas:
